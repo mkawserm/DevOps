@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: kube-drive-pv-claim
+
+
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: kube-drive-storage
+  resources:
+    requests:
+      storage: 1Gi # Claim 1 Gi of 5 Gi
