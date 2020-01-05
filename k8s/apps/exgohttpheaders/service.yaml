@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: exgohttpheaders
+  labels:
+    app: exgohttpheaders
+    service: exgohttpheaders
+
+
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: exgohttpheaders

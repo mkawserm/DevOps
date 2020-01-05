@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exgohttpheaders-v1
+  labels:
+    app: exgohttpheaders
+    version: v1
+
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exgohttpheaders
+      version: v1
+
+  template:
+    metadata:
+      labels:
+        app: exgohttpheaders
+        version: v1
+
+    spec:
+      containers:
+      - name: exgohttpheaders
+        image: mkawserm/exgohttpheaders:slim
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
