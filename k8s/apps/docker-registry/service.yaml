@@ -1,7 +1,7 @@
 ##################################################################################################
 # Author: Kawser
 # Version: 1.0.0
-# Description: YAML configuration for creating exgohttpheaders service
+# Description: YAML configuration for creating docker-registry Service
 #
 #
 #
@@ -16,17 +16,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: exgohttpheaders
+  name: docker-registry
   labels:
-    app: exgohttpheaders
-    service: exgohttpheaders
+    app: docker-registry
+    service: docker-registry
 
 
 spec:
   externalIPs:
-    - 192.168.1.53 # set custom external ip
+    - 192.168.0.100
+
   ports:
-  - port: 8080
-    name: http
+    - port: 443
+      targetPort: 443
+
   selector:
-    app: exgohttpheaders
+    app: docker-registry
+
+  # type: NodePort

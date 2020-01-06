@@ -1,0 +1,82 @@
+##################################################################################################
+# Author: Kawser
+# Version: 1.0.0
+# Description: YAML configuration for creating docker-registry deployment
+#
+#
+#
+# To apply:
+#
+#   kubectl apply -f deployment.yaml
+#
+#
+##################################################################################################
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-registry-v2.7.1
+  labels:
+    app: docker-registry
+    version: v2.7.1
+
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: docker-registry
+      version: v2.7.1
+
+
+  template:
+    metadata:
+      labels:
+        app: docker-registry
+        version: v2.7.1
+
+    spec:
+      containers:
+      - resources:
+        name: docker-registry
+        image: registry:2.7.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: registry-port
+          containerPort: 443
+
+        volumeMounts:
+        - mountPath: /docker-registry-secrets
+          name: docker-registry-secrets
+
+        - mountPath: /var/lib/registry
+          name: docker-images
+
+        env:
+        - name: REGISTRY_HTTP_ADDR
+          value: "0.0.0.0:443"
+        - name: REGISTRY_AUTH
+          value: "htpasswd"
+        - name: REGISTRY_AUTH_HTPASSWD_REALM
+          value: "Registry Realm"
+        - name: REGISTRY_AUTH_HTPASSWD_PATH
+          value: /docker-registry-secrets/htpasswd
+        - name: REGISTRY_HTTP_TLS_CERTIFICATE
+          value: /docker-registry-secrets/chain.crt
+        - name: REGISTRY_HTTP_TLS_KEY
+          value: /docker-registry-secrets/private.key
+
+
+      volumes:
+      - name: docker-images
+        hostPath:
+          path: /mnt/disk/drive1/docker-images # must be present in the host knode1
+  
+      - name: docker-registry-secrets
+        configMap:
+          name: docker-registry-secrets
+
+      nodeSelector:
+        name: knode1 # update with proper node name

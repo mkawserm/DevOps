@@ -1,3 +1,18 @@
+##################################################################################################
+# Author: Kawser
+# Version: 1.0.0
+# Description: YAML configuration for creating kube-drive-pv-claim PersistentVolumeClaim
+#
+#
+#
+# To apply:
+#
+#   kubectl apply -f kube-drive-pv-claim.yaml
+#
+#
+##################################################################################################
+
+
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

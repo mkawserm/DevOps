@@ -1,0 +1,19 @@
+##################################################################################################
+# Author: Kawser
+# Version: 1.0.0
+# Description: YAML configuration for creating namespace ztest
+#
+#
+#
+# To apply:
+#
+#   kubectl apply -f ztest.yaml
+#
+#
+##################################################################################################
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: ztest

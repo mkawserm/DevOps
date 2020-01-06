@@ -1,0 +1,29 @@
+##################################################################################################
+# Author: Kawser
+# Version: 1.0.0
+# Description: YAML configuration for creating test-config-map ConfigMap
+#
+#
+#
+# To apply:
+#
+#   kubectl apply -f test-config-map.yaml
+#
+#
+##################################################################################################
+
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-config-map
+  namespace: default
+
+
+data:
+  file1.txt: |
+    This is the file1.txt  
+  file2.txt: |
+    This is the file2.txt
+  file3.txt: |+
+    file3key:file3value

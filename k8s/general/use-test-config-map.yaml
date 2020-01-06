@@ -1,0 +1,63 @@
+##################################################################################################
+# Author: Kawser
+# Version: 1.0.0
+# Description: YAML configuration for using test-config-map ConfigMap as volume mount
+#
+#
+#
+# To apply:
+#
+#   kubectl apply -f use-test-config-map.yaml
+#   
+# Access shell
+#   kubectl exec -it use-test-config-map-v1.0.0-** -- /bin/sh
+#   cd /test-config-map
+#   cat file1
+# 
+#
+##################################################################################################
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: use-test-config-map-v1.0.0
+  labels:
+    app: use-test-config-map
+    version: v1.0.0
+
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: use-test-config-map
+      version: v1.0.0
+
+
+  template:
+    metadata:
+      labels:
+        app: use-test-config-map
+        version: v1.0.0
+
+    spec:
+      containers:
+      - resources:
+        name: use-test-config-map
+        image: busybox:1.31-musl
+        imagePullPolicy: IfNotPresent
+        command:
+            - tail
+            - -f
+            - /dev/null
+
+        volumeMounts:
+        - mountPath: /test-config-map
+          name: test-config-map
+
+      volumes:
+      - name: test-config-map
+        configMap:
+          name: test-config-map
